@@ -20,7 +20,7 @@
                 <v-data-table
                   must-sort
                   hide-actions
-                  :headers="headers"
+                  :headers="computedHeaders"
                   :items="students"
                   :search="search"
                   :loading="loading"
@@ -29,9 +29,9 @@
                   <template slot="items" slot-scope="props">
                     <router-link tag="tr" :to="{ name: 'view', params: { id: props.item.userName }}">
                       <td class="text-xs">{{ props.item.fullName }}</td>
-                      <td class="text-xs">{{ props.item.mail }}</td>
-                      <td class="text-xs">{{ props.item.mobilePhone }}</td>
-                      <td class="text-xs">{{ props.item.mainGroupName }}</td>
+                      <td class="text-xs hidden-md-and-down">{{ props.item.mail }}</td>
+                      <td class="text-xs hidden-md-and-down">{{ props.item.mobilePhone }}</td>
+                      <td class="text-xs hidden-md-and-down">{{ props.item.mainGroupName }}</td>
                     </router-link>
                   </template>
                   <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -63,17 +63,20 @@ const headers = [
   {
     text: 'E-post',
     sortable: false,
-    value: 'mail'
+    value: 'mail',
+    hide: 'mdAndDown'
   },
   {
     text: 'tlf.',
     sortable: false,
-    value: 'mobilePhone'
+    value: 'mobilePhone',
+    hide: 'mdAndDown'
   },
   {
     text: 'Klasse',
     sortable: false,
-    value: 'mainGroupName'
+    value: 'mainGroupName',
+    hide: 'mdAndDown'
   }
 ]
 
@@ -110,6 +113,9 @@ export default {
     pages () {
       if (this.pagination.rowsPerPage == null || this.pagination.totalItems == null) return 0
       return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+    },
+    computedHeaders () {
+      return this.headers.filter(h => !h.hide || !this.$vuetify.breakpoint[h.hide])
     }
   }
 }

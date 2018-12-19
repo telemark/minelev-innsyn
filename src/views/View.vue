@@ -60,12 +60,17 @@
             </v-card>
             <v-dialog
               v-model="dialog"
+              fullscreen
+              hide-overlay
+              transition="dialog-bottom-transition"
             >
               <v-card>
-
-                <v-btn @click="dialog = false" fab small color="accent">
-                  <v-icon dark>close</v-icon>
-                </v-btn>
+                <v-toolbar dark fixed color="secondary">
+                  <v-btn @click="dialog = false" icon dark color="primary">
+                    <v-icon dark>close</v-icon>
+                  </v-btn>
+                  <v-toolbar-title color="primary">Dokumentvisning</v-toolbar-title>
+                </v-toolbar>
                 <v-card-text>
                   <pdf :src="'data:application/pdf;base64,' + pdfFile" :page=1></pdf>
                 </v-card-text>
@@ -120,7 +125,6 @@ export default {
     },
     async showDialog (fileId) {
       const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
-      console.log(file)
       this.pdfFile = file
       this.dialog = true
     }

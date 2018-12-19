@@ -62,6 +62,10 @@
               v-model="dialog"
             >
               <v-card>
+
+                <v-btn @click="dialog = false" fab small color="accent">
+                  <v-icon dark>close</v-icon>
+                </v-btn>
                 <v-card-text>
                   <pdf :src="'data:application/pdf;base64,' + pdfFile" :page=1></pdf>
                 </v-card-text>

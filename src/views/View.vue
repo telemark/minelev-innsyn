@@ -39,7 +39,7 @@
                   </template>
                   <template slot="expand" slot-scope="props">
                     <v-card flat>
-                      <v-card-text v-for="item in props.item.files">
+                      <v-card-text :key="item.file" v-for="item in props.item.files">
                         <b>Fra</b>: {{ item.from }}<br/>
                         <b>Til</b>: {{ item.to }}<br/>
                         <v-divider></v-divider>

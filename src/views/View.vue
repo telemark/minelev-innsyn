@@ -65,14 +65,26 @@
               transition="dialog-bottom-transition"
             >
               <v-card>
-                <v-toolbar dark fixed color="secondary">
-                  <v-btn @click="dialog = false" icon dark color="primary">
+                <v-toolbar fixed color="secondary">
+                  <v-btn @click="dialog = false" icon flat dark color="primary">
                     <v-icon dark>close</v-icon>
                   </v-btn>
-                  <v-toolbar-title color="primary">Dokumentvisning</v-toolbar-title>
+                  <v-toolbar-title color="primary">
+                    Dokumentvisning
+                  </v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  Side:
+                  <input v-model.number="page" type="number" style="width: 2em"> / {{ pageCount }}
                 </v-toolbar>
-                <v-card-text>
-                  <pdf :src="'data:application/pdf;base64,' + pdfFile" :page=1></pdf>
+                <v-card-text v-if="pdfFile.length > 1">
+                  <pdf
+                    :src="'data:application/pdf;base64,' + pdfFile"
+                    :page="page"
+                    @num-pages="pageCount = $event"
+                    @page-loaded="currentPage = $event"
+                    @link-clicked="page = $event"
+                    @error="e => notification(e, 'error')"
+                  ></pdf>
                 </v-card-text>
               </v-card>
             </v-dialog>
@@ -115,7 +127,10 @@ export default {
       rowsPerPage: 5
     },
     dialog: false,
-    pdfFile: ''
+    pdfFile: '',
+    currentPage: 0,
+    pageCount: 0,
+    page: 1
   }),
   methods: {
     notification (msg, type = 'info') {
@@ -124,15 +139,24 @@ export default {
       this.snackbar.active = true
     },
     async showDialog (fileId) {
-      const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
-      this.pdfFile = file
-      this.dialog = true
+      try {
+        const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
+        this.pdfFile = file
+        this.dialog = true
+        this.page = 1
+      } catch (error) {
+        this.notification(error.message, 'error')
+      }
     }
   },
   async created () {
-    const { data } = await this.$http.get(`https://elevmappa.minelev.win/api/students/${this.$route.params.id}`)
-    this.student = data
-    this.loading = false
+    try {
+      const { data } = await this.$http.get(`https://elevmappa.minelev.win/api/students/${this.$route.params.id}`)
+      this.student = data
+      this.loading = false
+    } catch (error) {
+      this.notification(error.message, 'error')
+    }
   },
   computed: {
     pages () {

@@ -103,11 +103,15 @@ export default {
     }
   },
   async created () {
-    const { data } = await this.$http.get('https://elevmappa.minelev.win/api/students')
-    this.students = data
-    this.headers = headers
-    this.loading = false
-    this.pagination.totalItems = data.length
+    try {
+      const { data } = await this.$http.get('https://elevmappa.minelev.win/api/students')
+      this.students = data
+      this.headers = headers
+      this.loading = false
+      this.pagination.totalItems = data.length
+    } catch (error) {
+      this.notification(error.message, 'error')
+    }
   },
   computed: {
     pages () {

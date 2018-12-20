@@ -126,7 +126,4 @@ export default {
 </script>
 
 <style>
-.v-card__text {
-  font-size: 18px;
-}
 </style>

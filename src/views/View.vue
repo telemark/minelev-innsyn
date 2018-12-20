@@ -70,21 +70,23 @@
                     <v-icon dark>close</v-icon>
                   </v-btn>
                   <v-toolbar-title color="primary">
-                    Dokumentvisning
+                    Dokumentvisning - {{ fileId }}
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
                   Side:
-                  <input v-model.number="page" type="number" style="width: 2em"> / {{ pageCount }}
+                  <input v-model="page" type="number" style="width: 2em"> / {{ pageCount }}
                 </v-toolbar>
                 <v-card-text v-if="pdfFile.length > 1">
-                  <pdf
-                    :src="'data:application/pdf;base64,' + pdfFile"
-                    :page="page"
-                    @num-pages="pageCount = $event"
-                    @page-loaded="currentPage = $event"
-                    @link-clicked="page = $event"
-                    @error="e => notification(e, 'error')"
-                  ></pdf>
+                  <div style="margin-top: 64px">
+                    <pdf
+                      :src="'data:application/pdf;base64,' + pdfFile"
+                      :page="page"
+                      @num-pages="pageCount = $event"
+                      @page-loaded="currentPage = $event"
+                      @link-clicked="page = $event"
+                      @error="e => notification(e, 'error')"
+                    ></pdf>
+                  </div>
                 </v-card-text>
               </v-card>
             </v-dialog>
@@ -128,6 +130,7 @@ export default {
     },
     dialog: false,
     pdfFile: '',
+    fileId: '',
     currentPage: 0,
     pageCount: 0,
     page: 1
@@ -142,6 +145,7 @@ export default {
       try {
         const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
         this.pdfFile = file
+        this.fileId = fileId
         this.dialog = true
         this.page = 1
       } catch (error) {
@@ -171,9 +175,6 @@ export default {
 </script>
 
 <style>
-.v-card__text {
-  font-size: 18px;
-}
 tr:hover {
   cursor: pointer;
 }

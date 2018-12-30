@@ -3,8 +3,11 @@
     <v-layout wrap>
       <v-container fluid grid-list-lg>
         <v-layout wrap>
-
           <v-flex>
+            <v-breadcrumbs divider=">">
+              <v-breadcrumbs-item href="/">Elever</v-breadcrumbs-item>
+              <v-breadcrumbs-item :href="this.$route.params.id">{{ this.$route.params.id }}</v-breadcrumbs-item>
+            </v-breadcrumbs>
             <v-card>
               <v-card-title primary-title>
                 <h3 class="headline">{{ student.fullName }}</h3>
@@ -42,9 +45,9 @@
                       <v-card-text :key="item.file" v-for="item in props.item.files">
                         <b>Fra</b>: {{ item.from }}<br/>
                         <b>Til</b>: {{ item.to }}<br/>
-                        <v-divider></v-divider>
+                        <v-divider style="margin-bottom: 10px"></v-divider>
                         <span @click="showDialog(item.file)">
-                          <v-icon>attachment</v-icon> {{ item.title }}
+                          <v-icon style="height: 16px">attachment</v-icon> {{ item.title }}
                         </span>
                       </v-card-text>
                     </v-card>
@@ -63,6 +66,11 @@
               fullscreen
               hide-overlay
               transition="dialog-bottom-transition"
+              @keydown.187='zoom += 20'
+              @keydown.189='zoom -= 20'
+              @keydown.48='zoom = 100'
+              @keydown.left='prevPage'
+              @keydown.right='nextPage'
             >
               <v-card>
                 <v-toolbar fixed color="secondary">
@@ -70,23 +78,58 @@
                     <v-icon dark>close</v-icon>
                   </v-btn>
                   <v-toolbar-title color="primary">
-                    Dokumentvisning - {{ fileId }}
+                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ fileId }}</i>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
-                  Side:
-                  <input v-model="page" type="number" style="width: 2em"> / {{ pageCount }}
+                  <v-toolbar-items style="height: unset">
+                    <div>
+                      <span>
+                        Side:
+                        <input v-model.number="page" type="number" min="1" :max="pageCount" style="width: 2em; background: white; border: 1px solid;"> / {{ pageCount }}
+                      </span>
+                    </div>
+                  </v-toolbar-items>
                 </v-toolbar>
                 <v-card-text v-if="pdfFile.length > 1">
-                  <div style="margin-top: 64px">
+                  <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }' v-dragscroll>
                     <pdf
                       :src="'data:application/pdf;base64,' + pdfFile"
                       :page="page"
+                      :rotate="rotate"
                       @num-pages="pageCount = $event"
                       @page-loaded="currentPage = $event"
                       @link-clicked="page = $event"
-                      @error="e => notification(e, 'error')"
+                      @error="e => notification(e.length > 0 ? e : 'Ugyldig side', 'error')"
                     ></pdf>
                   </div>
+                  <v-snackbar bottom right :timeout="0" value="true" class="transparent-snack">
+                    <span>
+                      <v-tooltip v-if="page !== 1" top>
+                        <v-btn slot="activator" @click='page -= 1' style="padding: 0;" flat icon><v-icon>navigate_before</v-icon></v-btn>
+                        Forrige side
+                      </v-tooltip>
+                      <v-tooltip v-if="page !== pageCount" top>
+                        <v-btn slot="activator" @click='page += 1' style="padding: 0; margin-right: 10px;" flat icon><v-icon>navigate_next</v-icon></v-btn>
+                        Neste side
+                      </v-tooltip>
+                      <v-tooltip top>
+                        <v-btn slot="activator" @click='zoom += 20' style="padding: 0; margin-right: 10px;" flat icon><v-icon>zoom_in</v-icon></v-btn>
+                        Zoom in
+                      </v-tooltip>
+                      <v-tooltip top>
+                        <v-btn slot="activator" @click='zoom -= 20' style="padding: 0; margin-right: 10px" flat icon><v-icon>zoom_out</v-icon></v-btn>
+                        Zoom ut
+                      </v-tooltip>
+                      <v-tooltip top>
+                        <v-btn slot="activator" @click='rotate -= 90' style="display: none; padding: 0; margin-right: 10px" flat icon><v-icon>rotate_left</v-icon></v-btn>
+                        Rotèr venstre
+                      </v-tooltip>
+                      <v-tooltip top>
+                        <v-btn slot="activator" @click='rotate += 90' style="display: none; padding: 0; margin-right: 10px" flat icon><v-icon>rotate_right</v-icon></v-btn>
+                        Rotèr høyre
+                      </v-tooltip>
+                    </span>
+                  </v-snackbar>
                 </v-card-text>
               </v-card>
             </v-dialog>
@@ -102,6 +145,7 @@
 
 <script>
 import pdf from 'vue-pdf'
+import { dragscroll } from 'vue-dragscroll'
 
 export default {
   data: () => ({
@@ -126,14 +170,17 @@ export default {
     loading: true,
     search: '',
     pagination: {
-      rowsPerPage: 5
+      rowsPerPage: 5,
+      descending: true
     },
     dialog: false,
     pdfFile: '',
     fileId: '',
     currentPage: 0,
     pageCount: 0,
-    page: 1
+    page: 1,
+    zoom: 100,
+    rotate: 0
   }),
   methods: {
     notification (msg, type = 'info') {
@@ -141,13 +188,22 @@ export default {
       this.snackbar.type = type
       this.snackbar.active = true
     },
+    nextPage () {
+      if (this.page < this.pageCount) this.page += 1
+    },
+    prevPage () {
+      if (this.page > 1) this.page -= 1
+    },
     async showDialog (fileId) {
       try {
-        const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
+        // const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
+        const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`)
         this.pdfFile = file
         this.fileId = fileId
         this.dialog = true
         this.page = 1
+        this.zoom = 100
+        this.rotate = 0
       } catch (error) {
         this.notification(error.message, 'error')
       }
@@ -168,14 +224,37 @@ export default {
       return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
     }
   },
-  components: {
-    pdf
-  }
+  components: { pdf },
+  directives: { dragscroll }
 }
 </script>
-
 <style>
-tr:hover {
-  cursor: pointer;
+.pdf-viewer-wrapper {
+  margin-top: 64px;
+  overflow: hidden;
+  max-height: 90vh;
+  cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+}
+.pdf-viewer-wrapper:active {
+  cursor : -webkit-grabbing;
+  cursor : -moz-grabbing;
+  cursor : -o-grabbing;
+  cursor : grabbing;
+}
+.transparent-snack {
+  opacity: 0.5;
+  padding: 0;
+}
+.transparent-snack .v-snack__wrapper {
+  min-width: unset;
+}
+.transparent-snack .v-snack__content {
+  padding: unset;
+}
+.transparent-snack .v-snack__content .v-btn:first-of-type {
+  margin-left: 10px;
 }
 </style>

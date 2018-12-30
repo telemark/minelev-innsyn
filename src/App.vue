@@ -34,15 +34,30 @@
 
         <v-menu offset-y full-width>
           <v-btn icon v-if="$adal.isAuthenticated()" slot="activator">
-            <v-icon color="accent">verified_user</v-icon>
+            <v-badge class="small-badge" top color="accent" overlap>
+              <v-icon slot="badge">done</v-icon>
+              <v-icon>person</v-icon>
+             </v-badge>
           </v-btn>
-          <v-list>
-            <v-list-tile>
-              <span v-on:click="$adal.logout()">
-                Logg ut
-              </span>
-            </v-list-tile>
-          </v-list>
+          <v-card>
+            <v-list>
+              <v-list-tile avatar>
+                <v-list-tile-avatar>
+                  <v-icon large>account_circle</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ name }}</v-list-tile-title>
+                  <v-list-tile-sub-title>{{ username }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+            <v-divider></v-divider>
+            <v-list>
+              <v-list-tile v-on:click="$adal.logout()">
+                <v-icon color="grey">power_settings_new</v-icon>&nbsp; Logg ut
+              </v-list-tile>
+            </v-list>
+          </v-card>
         </v-menu>
 
     </v-toolbar>
@@ -56,12 +71,14 @@
 <script>
 export default {
   data: () => ({
-    name: ''
+    name: '',
+    username: ''
   }),
   created () {
     if (this.$adal.isAuthenticated()) {
       console.log(this.$adal)
       this.name = this.$adal.user.profile.name
+      this.username = this.$adal.user.userName
     }
   }
 }
@@ -70,5 +87,13 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+</style>
+
+<style>
+.small-badge .v-badge__badge {
+  height: 12px;
+  width: 12px;
+  padding: 8px;
 }
 </style>

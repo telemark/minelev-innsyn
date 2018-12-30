@@ -3,22 +3,25 @@
     <v-layout wrap>
       <v-container fluid grid-list-lg>
         <v-layout wrap>
-
           <v-flex>
+            <v-breadcrumbs divider=">">
+              <v-breadcrumbs-item href="/">Elever</v-breadcrumbs-item>
+            </v-breadcrumbs>
             <v-card>
               <v-card-title primary-title>
                 <h3 class="headline">Mine elever</h3>
               </v-card-title>
               <v-card-text class="grey--text">
+                <p>Velg eleven du ...</p>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
                   label="Søk etter elev"
                   single-line
                   hide-details
+                  autofocus
                 ></v-text-field>
                 <v-data-table
-                  must-sort
                   hide-actions
                   :headers="computedHeaders"
                   :items="students"
@@ -35,7 +38,8 @@
                     </router-link>
                   </template>
                   <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                    Ditt søk etter "{{ search }}" fikk ingen resultater.
+                    Ditt søk etter "{{ search }}" fikk ingen resultater.<br/>
+                    Finner du ikke eleven du leter etter, ta kontakt med den som er ansvarlig for Extens eller administrativt personale på din skole.
                   </v-alert>
                 </v-data-table>
                 <div class="text-xs-center pt-2">
@@ -74,7 +78,7 @@ const headers = [
   },
   {
     text: 'Klasse',
-    sortable: false,
+    sortable: true,
     value: 'mainGroupName',
     hide: 'mdAndDown'
   }
@@ -88,7 +92,8 @@ export default {
       type: false
     },
     pagination: {
-      rowsPerPage: 5
+      rowsPerPage: 5,
+      sortBy: 'fullName'
     },
     loading: true,
     search: '',
@@ -124,6 +129,9 @@ export default {
   }
 }
 </script>
-
 <style>
+
+tr:hover {
+  cursor: pointer;
+}
 </style>

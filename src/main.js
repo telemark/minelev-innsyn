@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'babel-polyfill'
 import './plugins/vuetify'
 import './plugins/adal'
 import './plugins/axios'

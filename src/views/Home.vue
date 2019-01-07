@@ -129,8 +129,8 @@ export default {
   }
 }
 </script>
-<style>
 
+<style>
 tr:hover {
   cursor: pointer;
 }

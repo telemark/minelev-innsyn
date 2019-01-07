@@ -85,7 +85,7 @@
                     <div>
                       <span>
                         Side:
-                        <input v-model.number="page" type="number" min="1" :max="pageCount" style="width: 2em; background: white; border: 1px solid;"> / {{ pageCount }}
+                        <input v-model.number="page" type="number" min="1" :max="pageCount" style="width: 2.3em; background: white; border: 1px solid;"> / {{ pageCount }}
                       </span>
                     </div>
                   </v-toolbar-items>

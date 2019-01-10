@@ -63,7 +63,7 @@
     </v-toolbar>
 
     <v-content>
-      <router-view/>
+      <router-view :accessToken="accessToken"/>
     </v-content>
   </v-app>
 </template>
@@ -72,11 +72,15 @@
 export default {
   data: () => ({
     name: '',
-    username: ''
+    accessToken: '',
+    token: ''
   }),
   created () {
     if (this.$adal.isAuthenticated()) {
       console.log(this.$adal)
+      const { clientId } = this.$adal.config
+      const accessToken = localStorage.getItem(`adal.access.token.key${clientId}`)
+      this.accessToken = { headers: { Authorization: `Bearer ${accessToken}` } }
       this.name = this.$adal.user.profile.name
       this.username = this.$adal.user.userName
     }

@@ -28,6 +28,7 @@
                   :search="search"
                   :loading="loading"
                   :pagination.sync="pagination"
+                  no-data-text="Ingen elever funnet"
                 >
                   <template slot="items" slot-scope="props">
                     <router-link tag="tr" :to="{ name: 'view', params: { id: props.item.userName }}">
@@ -37,6 +38,10 @@
                       <td class="text-xs hidden-md-and-down">{{ props.item.mainGroupName }}</td>
                     </router-link>
                   </template>
+                  <v-alert slot="no-data" :value="true" color="error" icon="warning">
+                    Du har ikke tilgang til noen elever. Ta kontakt med den som er ansvarlig for Extens eller administrativt personale på din skole.
+                  </v-alert>
+
                   <v-alert slot="no-results" :value="true" color="error" icon="warning">
                     Ditt søk etter "{{ search }}" fikk ingen resultater.<br/>
                     Finner du ikke eleven du leter etter, ta kontakt med den som er ansvarlig for Extens eller administrativt personale på din skole.
@@ -85,6 +90,12 @@ const headers = [
 ]
 
 export default {
+  props: {
+    accessToken: {
+      type: Object,
+      required: true
+    }
+  },
   data: () => ({
     snackbar: {
       active: false,
@@ -109,7 +120,7 @@ export default {
   },
   async created () {
     try {
-      const { data } = await this.$http.get('https://elevmappa.minelev.win/api/students')
+      const { data } = await this.$http.get('https://my-students.innsyn.minelev.no/api/students', this.accessToken)
       this.students = data
       this.headers = headers
       this.loading = false

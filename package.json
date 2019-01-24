@@ -19,7 +19,7 @@
     "vue-dragscroll": "1.8.1",
     "vue-pdf": "4.0.5",
     "vue-router": "3.0.2",
-    "vuetify": "1.4.0"
+    "vuetify": "1.4.3"
   },
   "devDependencies": {
     "@babel/preset-env": "7.3.1",

@@ -146,6 +146,7 @@
 <script>
 import pdf from 'vue-pdf'
 import { dragscroll } from 'vue-dragscroll'
+import config from '../../config'
 
 export default {
   props: {
@@ -202,7 +203,7 @@ export default {
     },
     async showDialog (fileId) {
       try {
-        // const { data: { file } } = await this.$http.get(`https://elevmappa.minelev.win/api/files/${fileId}`)
+        // const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`)
         const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
         this.pdfFile = file
         this.fileId = fileId
@@ -217,7 +218,8 @@ export default {
   },
   async created () {
     try {
-      const { data } = await this.$http.get(`https://my-students.innsyn.minelev.no/api/students/${this.$route.params.id}`, this.accessToken)
+      // const { data } = await this.$http.get(`https://my-students.innsyn.minelev.no/api/students/${this.$route.params.id}`, this.accessToken)
+      const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students/${this.$route.params.id}`, this.accessToken)
       this.student = data
       this.loading = false
     } catch (error) {

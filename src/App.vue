@@ -77,10 +77,10 @@ export default {
   }),
   created () {
     if (this.$adal.isAuthenticated()) {
-      console.log(this.$adal)
+      // console.log(this.$adal)
       const { clientId } = this.$adal.config
       const accessToken = localStorage.getItem(`adal.access.token.key${clientId}`)
-      this.accessToken = { headers: { Authorization: `Bearer ${accessToken}` } }
+      this.accessToken = { headers: { Authorization: `Bearer ${accessToken}` } }
       this.name = this.$adal.user.profile.name
       this.username = this.$adal.user.userName
     }

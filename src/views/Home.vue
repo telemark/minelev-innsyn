@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import config from '../../config'
+
 const headers = [
   {
     text: 'Navn',
@@ -120,7 +122,8 @@ export default {
   },
   async created () {
     try {
-      const { data } = await this.$http.get('https://my-students.innsyn.minelev.no/api/students', this.accessToken)
+      // const { data } = await this.$http.get('https://my-students.innsyn.minelev.no/api/students', this.accessToken)
+      const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students`, this.accessToken)
       this.students = data
       this.headers = headers
       this.loading = false

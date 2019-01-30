@@ -19,7 +19,7 @@
     "vue-dragscroll": "1.8.1",
     "vue-pdf": "4.0.6",
     "vue-router": "3.0.2",
-    "vuetify": "1.4.3"
+    "vuetify": "1.4.4"
   },
   "devDependencies": {
     "@babel/preset-env": "7.3.1",
@@ -34,7 +34,7 @@
     "stylus-loader": "3.0.2",
     "vue-cli-plugin-vuetify": "0.4.6",
     "vue-template-compiler": "2.5.22",
-    "vuetify-loader": "1.1.1"
+    "vuetify-loader": "1.2.0"
   },
   "eslintConfig": {
     "root": true,

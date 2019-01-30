@@ -8,5 +8,9 @@ module.exports = {
   // Host URI
   redirectUri: process.env.VUE_APP_REDIRECT_URL || '<host addr>',
 
-  cacheLocation: 'localStorage'
+  // Cache Location
+  cacheLocation: 'localStorage',
+
+  // Students API base URL
+  studentsApiUrl: process.env.STUDENTS_API_URL || 'https://elevmappa.minelev.win'
 }

@@ -36,7 +36,7 @@
                 >
                   <template slot="items" slot-scope="props">
                     <tr @click="props.expanded = !props.expanded">
-                      <td class="text-xs">{{ props.item.id }}</td>
+                      <td class="text-xs">{{ cleanId(props.item.id) }}</td>
                       <td class="text-xs">{{ props.item.title }}</td>
                     </tr>
                   </template>
@@ -78,7 +78,7 @@
                     <v-icon dark>close</v-icon>
                   </v-btn>
                   <v-toolbar-title color="primary">
-                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ fileId }}</i>
+                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ cleanId(fileId) }}</i>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-toolbar-items style="height: unset">
@@ -166,7 +166,7 @@ export default {
       {
         text: 'Dok. nr.',
         sortable: true,
-        value: 'id'
+        value: 'sortId'
       },
       {
         text: 'Tittel',
@@ -177,7 +177,7 @@ export default {
     loading: true,
     search: '',
     pagination: {
-      rowsPerPage: 5,
+      rowsPerPage: 10,
       descending: true
     },
     dialog: false,
@@ -201,10 +201,14 @@ export default {
     prevPage () {
       if (this.page > 1) this.page -= 1
     },
+    cleanId (id) {
+      return unescape(id)
+    },
     async showDialog (fileId) {
       try {
-        // const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`)
-        const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
+        console.log(fileId)
+        const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`, this.accessToken)
+        // const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
         this.pdfFile = file
         this.fileId = fileId
         this.dialog = true
@@ -220,8 +224,10 @@ export default {
     try {
       // const { data } = await this.$http.get(`https://my-students.innsyn.minelev.no/api/students/${this.$route.params.id}`, this.accessToken)
       const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students/${this.$route.params.id}`, this.accessToken)
+      // console.log(JSON.stringify(data.documents, null, 2))
       this.student = data
       this.loading = false
+      this.pagination.totalItems = data.documents.length
     } catch (error) {
       this.notification(error.message, 'error')
     }

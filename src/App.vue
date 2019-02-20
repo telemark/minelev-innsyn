@@ -32,10 +32,10 @@
         </v-tooltip>
       </router-link>
 
-        <v-menu offset-y full-width>
+        <v-menu offset-x full-width>
           <v-btn icon v-if="$adal.isAuthenticated()" slot="activator">
             <v-badge class="small-badge" top color="accent" overlap>
-              <v-icon slot="badge">done</v-icon>
+              <!-- <v-icon slot="badge">done</v-icon> -->
               <v-icon>person</v-icon>
              </v-badge>
           </v-btn>

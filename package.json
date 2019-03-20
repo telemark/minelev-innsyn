@@ -22,7 +22,7 @@
     "vuetify": "1.5.7"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.3.4",
+    "@babel/preset-env": "7.4.1",
     "@vue/cli-plugin-babel": "3.5.1",
     "@vue/cli-plugin-eslint": "3.5.1",
     "@vue/cli-plugin-pwa": "3.5.1",

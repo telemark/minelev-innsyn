@@ -18,7 +18,7 @@
     "vue-axios": "2.1.4",
     "vue-dragscroll": "1.8.3",
     "vue-pdf": "4.0.6",
-    "vue-router": "3.0.2",
+    "vue-router": "3.0.3",
     "vuetify": "1.5.9"
   },
   "devDependencies": {

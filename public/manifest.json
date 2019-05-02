@@ -1,6 +1,6 @@
 {
-  "name": "MinElev innsyn",
-  "short_name": "Innsyn",
+  "name": "MinElev Elevmappa",
+  "short_name": "Elevmappa",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

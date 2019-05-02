@@ -1,5 +1,5 @@
 {
-  "name": "minelev-innsyn",
+  "name": "minelev-elevmappa",
   "version": 2,
   "builds": [
     {"src": "package.json", "use": "@now/static-build"}

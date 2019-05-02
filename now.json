@@ -18,5 +18,5 @@
     {"src": "^/(.*).worker.js.map", "dest": "/$1.worker.js.map"},
     {"src": ".*", "dest": "/index.html"}
   ],
-  "alias": "innsyn.minelev.no"
+  "alias": "elevmappa.minelev.no"
 }

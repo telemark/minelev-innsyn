@@ -36,18 +36,19 @@
                 >
                   <template slot="items" slot-scope="props">
                     <tr @click="props.expanded = !props.expanded">
-                      <td class="text-xs">{{ cleanId(props.item.id) }}</td>
+                      <td class="text-xs">{{ unescapeString(props.item.id) }}</td>
                       <td class="text-xs">{{ props.item.title }}</td>
                     </tr>
                   </template>
                   <template slot="expand" slot-scope="props">
                     <v-card flat>
                       <v-card-text :key="item.file" v-for="item in props.item.files">
-                        <b>Fra</b>: {{ item.from }}<br/>
-                        <b>Til</b>: {{ item.to }}<br/>
+                        <b>Fra</b>: {{ item.from || 'Ukjent' }}<br/>
+                        <b>Til</b>: {{ item.to || 'Ukjent' }}<br/>
                         <v-divider style="margin-bottom: 10px"></v-divider>
                         <span @click="showDialog(item.file)">
-                          <v-icon style="height: 16px">attachment</v-icon> {{ item.title }}
+                          <v-progress-circular v-if="fileLoading === item.file" size="16" width="3" indeterminate color="accent" ></v-progress-circular>
+                          <v-icon v-else style="height: 16px">attachment</v-icon> {{ item.title }}
                         </span>
                       </v-card-text>
                     </v-card>
@@ -78,7 +79,7 @@
                     <v-icon dark>close</v-icon>
                   </v-btn>
                   <v-toolbar-title color="primary">
-                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ cleanId(fileId) }}</i>
+                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ unescapeString(fileId) }}</i>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-toolbar-items style="height: unset">
@@ -187,7 +188,8 @@ export default {
     pageCount: 0,
     page: 1,
     zoom: 100,
-    rotate: 0
+    rotate: 0,
+    fileLoading: false
   }),
   methods: {
     notification (msg, type = 'info') {
@@ -195,27 +197,29 @@ export default {
       this.snackbar.type = type
       this.snackbar.active = true
     },
+    unescapeString (str) {
+      return unescape(str)
+    },
     nextPage () {
       if (this.page < this.pageCount) this.page += 1
     },
     prevPage () {
       if (this.page > 1) this.page -= 1
     },
-    cleanId (id) {
-      return unescape(id)
-    },
     async showDialog (fileId) {
       try {
-        console.log(fileId)
+        this.fileLoading = fileId
         const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`, this.accessToken)
         // const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
         this.pdfFile = file
+        this.fileLoading = false
         this.fileId = fileId
         this.dialog = true
         this.page = 1
         this.zoom = 100
         this.rotate = 0
       } catch (error) {
+        this.fileLoading = false
         this.notification(error.message, 'error')
       }
     }
@@ -224,7 +228,6 @@ export default {
     try {
       // const { data } = await this.$http.get(`https://my-students.innsyn.minelev.no/api/students/${this.$route.params.id}`, this.accessToken)
       const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students/${this.$route.params.id}`, this.accessToken)
-      // console.log(JSON.stringify(data.documents, null, 2))
       this.student = data
       this.loading = false
       this.pagination.totalItems = data.documents.length

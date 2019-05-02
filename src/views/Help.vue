@@ -18,7 +18,7 @@
                 Nostrilis tickler educated derek griffiths pencil soup strainer? Graeme souness basil fawlty waxy gurn stiff upper lip kris kristofferson.
                 tony stark, leslie phillips timothy dalton driving gloves tony stark kris kristofferson.
                 graeme souness stiff upper lip waxy gurn basil fawlty andrew weatherall prostate cancer borat cappuccino collector?</p>
-                <h6 class="title">Hurtigtaster</h6>
+                <h5 class="title">Hurtigtaster</h5>
                 <br />
                 <p><strong>Dokumentvisning</strong></p>
                 <p><code>+</code>Zoom inn</p>

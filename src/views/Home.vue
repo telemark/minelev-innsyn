@@ -12,7 +12,7 @@
                 <h3 class="headline">Mine elever</h3>
               </v-card-title>
               <v-card-text class="grey--text">
-                <p>Klikk på eleven du ønsker å se dokumentene til</p>
+                <p>Velg eleven du ...</p>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
@@ -38,7 +38,7 @@
                       <td class="text-xs hidden-md-and-down">{{ props.item.mainGroupName }}</td>
                     </router-link>
                   </template>
-                  <v-alert slot="no-data" :value="true" v-if="loading !== true" color="error" icon="warning">
+                  <v-alert slot="no-data" :value="true" v-if="!loading" color="error" icon="warning">
                     Du har ikke tilgang til noen elever. Ta kontakt med den som er ansvarlig for Extens eller administrativt personale på din skole.
                   </v-alert>
 
@@ -122,6 +122,7 @@ export default {
   },
   async created () {
     try {
+      // const { data } = await this.$http.get('https://my-students.innsyn.minelev.no/api/students', this.accessToken)
       const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students`, this.accessToken)
       this.students = data
       this.headers = headers

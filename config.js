@@ -12,5 +12,5 @@ module.exports = {
   cacheLocation: 'localStorage',
 
   // Students API base URL
-  studentsApiUrl: process.env.STUDENTS_API_URL || 'https://elevmappa.minelev.win'
+  studentsApiUrl: process.env.VUE_APP_API_URL || 'https://elevmappa.minelev.win'
 }

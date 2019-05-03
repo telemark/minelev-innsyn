@@ -1,2 +1,2 @@
 npm run build
-http-server dist
+http-server-spa dist

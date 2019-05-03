@@ -19,4 +19,4 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8080
-CMD /app/dist/entrypoint.sh
+CMD /app/entrypoint.sh

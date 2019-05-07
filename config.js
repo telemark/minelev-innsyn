@@ -8,6 +8,9 @@ module.exports = {
   // Host URI
   redirectUri: process.env.VUE_APP_REDIRECT_URL || '<host addr>',
 
+  // Login every time
+  extraQueryParameter: 'prompt=login',
+
   // Cache Location
   cacheLocation: 'localStorage',
 

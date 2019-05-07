@@ -14,10 +14,6 @@
               <v-card-text>
                 <p>Nedenfor finner du ofte stilte spørsmål, svar og hurtigtaster.</p>
                 <p>Feil, mangler og ønsker kan du sende til <a href="mailto:post.opplaring@t-fk.no" title="Send e-post til post.opplaring@t-fk.no" target="_blank">post.opplaring@t-fk.no</a></p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Nostrilis tickler educated derek griffiths pencil soup strainer? Graeme souness basil fawlty waxy gurn stiff upper lip kris kristofferson.
-                tony stark, leslie phillips timothy dalton driving gloves tony stark kris kristofferson.
-                graeme souness stiff upper lip waxy gurn basil fawlty andrew weatherall prostate cancer borat cappuccino collector?</p>
                 <h5 class="title">Hurtigtaster</h5>
                 <br />
                 <p><strong>Dokumentvisning</strong></p>

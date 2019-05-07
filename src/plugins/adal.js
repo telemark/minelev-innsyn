@@ -8,7 +8,7 @@ Vue.use(Adal, {
   config,
 
   // Set this to true for authentication on startup
-  requireAuthOnInitialize: true,
+  requireAuthOnInitialize: false,
 
   // Pass a vue-router object in to add route hooks with authentication and role checking
   router

@@ -12,7 +12,7 @@ module.exports = {
   extraQueryParameter: 'prompt=login&domain_hint=t-fk.no&login_hint=brukernavn@login.top.no',
 
   // Cache Location
-  cacheLocation: 'localStorage',
+  cacheLocation: 'sessionStorage',
 
   // Students API base URL
   studentsApiUrl: process.env.VUE_APP_API_URL || 'https://elevmappa.minelev.win'

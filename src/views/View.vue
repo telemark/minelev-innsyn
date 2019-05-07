@@ -145,7 +145,7 @@
 </template>
 
 <script>
-import pdf from 'vue-pdf'
+import pdf from '@maccyber/vue-pdf'
 import { dragscroll } from 'vue-dragscroll'
 import config from '../../config'
 
@@ -228,7 +228,6 @@ export default {
     try {
       // const { data } = await this.$http.get(`https://my-students.innsyn.minelev.no/api/students/${this.$route.params.id}`, this.accessToken)
       const { data } = await this.$http.get(`${config.studentsApiUrl}/api/students/${this.$route.params.id}`, this.accessToken)
-      if (window && window.navigator.userAgent.includes('Trident')) pdfjs.PDFJS.disableWorker = true
       this.student = data
       this.loading = false
       this.pagination.totalItems = data.documents.length

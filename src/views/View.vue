@@ -94,7 +94,7 @@
                 <v-card-text v-if="pdfFile.length > 1">
                   <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }' v-dragscroll>
                     <pdf
-                      :src="'data:application/pdf;base64,' + pdfFile"
+                      :src="pdfFile"
                       :page="page"
                       :rotate="rotate"
                       @num-pages="pageCount = $event"

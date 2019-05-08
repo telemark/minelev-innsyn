@@ -118,6 +118,12 @@ export default {
       this.snackbar.message = msg
       this.snackbar.type = type
       this.snackbar.active = true
+    },
+    checkErrorCode (error) {
+      if (error.response && error.response.status === 401) {
+        console.log('401 status code logging out')
+        $this.adal.logout()
+      }
     }
   },
   async created () {
@@ -129,6 +135,7 @@ export default {
       this.loading = false
       this.pagination.totalItems = data.length
     } catch (error) {
+      checkErrorCode(error)
       this.notification(error.message, 'error')
     }
   },

@@ -209,6 +209,12 @@ export default {
     convertDataToBinary (base64) {
       return new Uint8Array(atob(base64).split('').map(c => c.charCodeAt(0)))
     },
+    checkErrorCode (error) {
+      if (error.response && error.response.status === 401) {
+        console.log('401 status code logging out')
+        this.$adal.logout()
+      }
+    },
     async showDialog (fileId) {
       try {
         this.fileLoading = fileId
@@ -223,6 +229,7 @@ export default {
         this.rotate = 0
       } catch (error) {
         this.fileLoading = false
+        this.checkErrorCode(error)
         this.notification(error.message, 'error')
       }
     }
@@ -235,6 +242,7 @@ export default {
       this.loading = false
       this.pagination.totalItems = data.documents.length
     } catch (error) {
+      this.checkErrorCode(error)
       this.notification(error.message, 'error')
     }
   },

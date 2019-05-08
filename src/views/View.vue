@@ -94,7 +94,7 @@
                 <v-card-text v-if="pdfFile.length > 1">
                   <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }' v-dragscroll>
                     <pdf
-                      :src="'data:application/pdf;base64,' + pdfFile"
+                      :src="pdfFile"
                       :page="page"
                       :rotate="rotate"
                       @num-pages="pageCount = $event"
@@ -206,12 +206,21 @@ export default {
     prevPage () {
       if (this.page > 1) this.page -= 1
     },
+    convertDataToBinary (base64) {
+      let i
+      const raw = window.atob(base64)
+      const array = new Uint8Array(new ArrayBuffer(raw.length))
+      for (i = 0; i < raw.length; i++) {
+        array[i] = raw.charCodeAt(i)
+      }
+      return array
+    },
     async showDialog (fileId) {
       try {
         this.fileLoading = fileId
         const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`, this.accessToken)
         // const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
-        this.pdfFile = file
+        this.pdfFile = this.convertDataToBinary(file)
         this.fileLoading = false
         this.fileId = fileId
         this.dialog = true

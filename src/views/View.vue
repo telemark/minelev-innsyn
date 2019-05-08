@@ -145,7 +145,7 @@
 </template>
 
 <script>
-import pdf from '@maccyber/vue-pdf'
+import pdf from 'vue-pdf'
 import { dragscroll } from 'vue-dragscroll'
 import config from '../../config'
 

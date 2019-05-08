@@ -122,7 +122,7 @@ export default {
     checkErrorCode (error) {
       if (error.response && error.response.status === 401) {
         console.log('401 status code logging out')
-        $this.adal.logout()
+        this.$adal.logout()
       }
     }
   },
@@ -135,7 +135,7 @@ export default {
       this.loading = false
       this.pagination.totalItems = data.length
     } catch (error) {
-      checkErrorCode(error)
+      this.checkErrorCode(error)
       this.notification(error.message, 'error')
     }
   },

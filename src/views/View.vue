@@ -207,13 +207,7 @@ export default {
       if (this.page > 1) this.page -= 1
     },
     convertDataToBinary (base64) {
-      let i
-      const raw = window.atob(base64)
-      const array = new Uint8Array(new ArrayBuffer(raw.length))
-      for (i = 0; i < raw.length; i++) {
-        array[i] = raw.charCodeAt(i)
-      }
-      return array
+      return new Uint8Array(atob(base64).split('').map(c => c.charCodeAt(0)))
     },
     async showDialog (fileId) {
       try {

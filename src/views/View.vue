@@ -243,7 +243,8 @@ export default {
       this.pagination.totalItems = data.documents.length
     } catch (error) {
       this.checkErrorCode(error)
-      this.notification(error.message, 'error')
+      const message = error.response && error.response.data ? error.response.data : error.message
+      this.notification(message, 'error')
     }
   },
   computed: {

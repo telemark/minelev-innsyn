@@ -8,7 +8,6 @@
               <router-link to="/" tag="button">
                 <v-btn
                   color="accent"
-                  small
                 >
                 <v-icon>navigate_before</v-icon>
                 Tilbake

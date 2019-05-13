@@ -104,4 +104,8 @@ a {
   width: 12px;
   padding: 8px;
 }
+
+*:not(.material-icons) {
+  font-size: 18px !important;
+}
 </style>

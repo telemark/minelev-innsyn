@@ -8,7 +8,6 @@
               <router-link to="/" tag="button">
                 <v-btn
                   color="accent"
-                  small
                 >
                 <v-icon>navigate_before</v-icon>
                 Tilbake
@@ -18,10 +17,10 @@
                 <h3 class="headline">{{ student.fullName }}</h3>
               </v-card-title>
               <v-card-text>
+                Saksnummer: {{ student.caseNumber }} <br />
                 Fødselsnummer: {{ student.personalIdNumber }}<br/>
                 Mobilnr: {{ student.mobilePhone }} <br/>
                 E-post: {{ student.mail }} <br/>
-                Adresse: -<br/>
                 Klasse: {{ student.mainGroupName }}<br/><br/>
                <v-text-field
                   v-model="search"

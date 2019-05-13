@@ -4,9 +4,6 @@
       <v-container fluid grid-list-lg>
         <v-layout wrap>
           <v-flex xs12>
-           <v-breadcrumbs divider=">">
-              <v-breadcrumbs-item href="/help">Hjelp</v-breadcrumbs-item>
-            </v-breadcrumbs>
             <v-card>
               <router-link to="/" tag="button">
                 <v-btn

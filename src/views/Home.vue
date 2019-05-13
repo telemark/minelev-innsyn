@@ -4,9 +4,6 @@
       <v-container fluid grid-list-lg>
         <v-layout wrap>
           <v-flex>
-            <v-breadcrumbs divider=">">
-              <v-breadcrumbs-item href="/">Elever</v-breadcrumbs-item>
-            </v-breadcrumbs>
             <v-card>
               <v-card-title primary-title>
                 <h3 class="headline">Mine elever</h3>

@@ -9,14 +9,14 @@
               <v-breadcrumbs-item :href="this.$route.params.id">{{ this.$route.params.id }}</v-breadcrumbs-item>
             </v-breadcrumbs>
             <v-card>
-              <v-btn
-                color="accent"
-                @click="loader = 'loading'"
-              >
-              <br />
-              <v-icon>navigate_before</v-icon>
-              Tilbake
-              </v-btn>
+              <router-link to="/" tag="button">
+                <v-btn
+                  color="accent"
+                >
+                <v-icon>navigate_before</v-icon>
+                Tilbake
+                </v-btn>
+              </router-link>
               <v-card-title primary-title>
                 <h3 class="headline">{{ student.fullName }}</h3>
               </v-card-title>
@@ -29,7 +29,7 @@
                <v-text-field
                   v-model="search"
                   append-icon="search"
-                  label="Søk i dokumenttittel"
+                  label="Søk i dokumentertittel"
                   single-line
                   hide-details
                   autofocus

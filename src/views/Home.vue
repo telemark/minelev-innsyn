@@ -11,7 +11,7 @@
               <v-card-title primary-title>
                 <h3 class="headline">Mine elever</h3>
               </v-card-title>
-              <v-card-text class="grey--text">
+              <v-card-text>
                 <p>Klikk på eleven du ønsker å se dokumentene til</p>
                 <v-text-field
                   v-model="search"
@@ -20,6 +20,7 @@
                   single-line
                   hide-details
                   autofocus
+                  color="accent"
                 ></v-text-field>
                 <v-data-table
                   hide-actions

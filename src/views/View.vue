@@ -53,6 +53,9 @@
                       </v-card-text>
                     </v-card>
                   </template>
+                  <v-alert slot="no-data" :value="!loading" color="error" icon="warning">
+                    {{ snackbar.message }}
+                  </v-alert>
                   <v-alert slot="no-results" :value="true" color="error" icon="warning">
                     Ditt søk etter "{{ search }}" fikk ingen resultater.
                   </v-alert>
@@ -243,6 +246,7 @@ export default {
       this.pagination.totalItems = data.documents.length
     } catch (error) {
       this.checkErrorCode(error)
+      this.loading = false
       const message = error.response && error.response.data ? error.response.data : error.message
       this.notification(message, 'error')
     }

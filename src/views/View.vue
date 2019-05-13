@@ -30,7 +30,7 @@
                <v-text-field
                   v-model="search"
                   prepend-icon="search"
-                  label="Søk i dokumentertittel"
+                  label="Søk i dokumentittel"
                   single-line
                   hide-details
                   autofocus
@@ -100,6 +100,7 @@
                     <pdf
                       v-for="i in pageCount"
                       :src="pdfFile"
+                      :key:"i"
                       :page="i"
                       style="height: 100%"
                       @page-loaded="currentPage = $event"
@@ -163,7 +164,8 @@ export default {
       {
         text: 'Dok. nr.',
         sortable: true,
-        value: 'sortId'
+        value: 'sortId',
+        hide: true
       },
       {
         text: 'Tittel',

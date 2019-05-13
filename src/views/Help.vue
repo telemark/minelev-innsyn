@@ -24,6 +24,8 @@
                 <p>Finner du ikke eleven du leter etter, ta kontakt med den som er ansvarlig for Extens eller administrativt personale på din skole.</p>
                 <p><b>Jeg mangler leserettigheter til et dokument jeg mener jeg bør lese.</b></p>
                 <p>Ta kontakt med din nærmeste leder som vil undersøke om du har rett til innsyn i dokumentet.</p>
+                <p><b>Jeg får melding om "Finner ikke elevmappe. Kontakt arkivet"</b></p>
+                <p>Ta kontakt med arkivet på e-post: post.arkiv@t-fk.no eller tlf. 35 91 70 11</p>
                 <h5 class="title">Hurtigtaster</h5>
                 <br />
                 <p><strong>Dokumentvisning</strong></p>

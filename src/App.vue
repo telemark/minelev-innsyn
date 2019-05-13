@@ -12,6 +12,10 @@
         </v-toolbar-side-icon>
       </router-link>
 
+      <v-toolbar-title>
+        Elevmappa
+      </v-toolbar-title>
+
       <v-spacer></v-spacer>
 
       <router-link to="/">

@@ -12,7 +12,7 @@
               <v-card-title primary-title>
                 <h3 class="headline">{{ student.fullName }}</h3>
               </v-card-title>
-              <v-card-text class="grey--text">
+              <v-card-text>
                 Fødselsnummer: {{ student.personalIdNumber }}<br/>
                 Mobilnr: {{ student.mobilePhone }} <br/>
                 E-post: {{ student.mail }} <br/>
@@ -24,6 +24,8 @@
                   label="Søk i dokumenter"
                   single-line
                   hide-details
+                  autofocus
+                  color="accent"
                 ></v-text-field>
                 <v-data-table
                   must-sort

@@ -105,7 +105,7 @@ a {
   padding: 8px;
 }
 
-*:not(.material-icons):not(h3) {
+*:not(.material-icons):not(h3):not(h5) {
   font-size: 18px !important;
 }
 </style>

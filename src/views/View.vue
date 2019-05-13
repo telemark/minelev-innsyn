@@ -100,7 +100,7 @@
                     <pdf
                       v-for="i in pageCount"
                       :src="pdfFile"
-                      :key:"i"
+                      :key="i"
                       :page="i"
                       style="height: 100%"
                       @page-loaded="currentPage = $event"

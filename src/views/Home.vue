@@ -15,8 +15,8 @@
                 <p>Klikk på eleven du ønsker å se dokumentene til</p>
                 <v-text-field
                   v-model="search"
-                  append-icon="search"
-                  label="Søk etter elev"
+                  prepend-icon="search"
+                  label="Søk etter elev eller klasse"
                   single-line
                   hide-details
                   autofocus

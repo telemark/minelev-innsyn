@@ -8,6 +8,14 @@
               <v-breadcrumbs-item href="/help">Hjelp</v-breadcrumbs-item>
             </v-breadcrumbs>
             <v-card>
+              <router-link to="/" tag="button">
+                <v-btn
+                  color="accent"
+                >
+                <v-icon>navigate_before</v-icon>
+                Tilbake
+                </v-btn>
+              </router-link>
               <v-card-title primary-title>
                 <h3 class="headline">Spørsmål og svar</h3>
               </v-card-title>

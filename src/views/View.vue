@@ -28,7 +28,7 @@
                 Klasse: {{ student.mainGroupName }}<br/><br/>
                <v-text-field
                   v-model="search"
-                  append-icon="search"
+                  prepend-icon="search"
                   label="Søk i dokumentertittel"
                   single-line
                   hide-details

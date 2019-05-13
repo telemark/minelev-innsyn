@@ -96,7 +96,7 @@
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text v-if="pdfFile.length > 1">
-                  <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }'>
+                  <div :style="'width:' + zoom + '%'" ref="pdfview" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }'>
                     <pdf
                       v-for="i in pageCount"
                       :src="pdfFile"
@@ -221,6 +221,9 @@ export default {
         this.page = 1
         this.zoom = 100
         this.rotate = 0
+        this.$nextTick(() => {
+          this.$refs.pdfview.scrollTop = 0
+        })
       } catch (error) {
         this.fileLoading = false
         this.checkErrorCode(error)

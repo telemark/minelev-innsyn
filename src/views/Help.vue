@@ -11,6 +11,7 @@
               <router-link to="/" tag="button">
                 <v-btn
                   color="accent"
+                  small
                 >
                 <v-icon>navigate_before</v-icon>
                 Tilbake
@@ -40,8 +41,6 @@
                 <p><code>+</code>Zoom inn</p>
                 <p><code>-</code>Zoom ut</p>
                 <p><code>0</code>Tilbakestill zoom</p>
-                <p><code>→</code>Neste side</p>
-                <p><code>←</code>Forrige side</p>
               </v-card-text>
             </v-card>
           </v-flex>

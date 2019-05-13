@@ -12,6 +12,7 @@
               <router-link to="/" tag="button">
                 <v-btn
                   color="accent"
+                  small
                 >
                 <v-icon>navigate_before</v-icon>
                 Tilbake
@@ -83,8 +84,6 @@
               @keydown.187='zoom += 20'
               @keydown.189='zoom -= 20'
               @keydown.48='zoom = 100'
-              @keydown.left='prevPage'
-              @keydown.right='nextPage'
             >
               <v-card>
                 <v-toolbar fixed color="secondary">
@@ -92,25 +91,17 @@
                     <v-icon dark>close</v-icon>
                   </v-btn>
                   <v-toolbar-title color="primary">
-                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ unescapeString(fileId) }}</i>
+                    <span class="hidden-md-and-down">Dokumentvisning - </span><i>{{ unescapeString(fileId) }} &nbsp;</i>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-toolbar-items style="height: unset">
-                    <div>
-                      <span>
-                        Side:
-                        <input v-model.number="page" type="number" min="1" :max="pageCount" style="width: 2.3em; background: white; border: 1px solid;"> / {{ pageCount }}
-                      </span>
-                    </div>
-                  </v-toolbar-items>
                 </v-toolbar>
                 <v-card-text v-if="pdfFile.length > 1">
-                  <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }' v-dragscroll>
+                  <div :style="'width:' + zoom + '%'" class="pdf-viewer-wrapper" :class='{"zoom-active": zoom > 100 }'>
                     <pdf
+                      v-for="i in pageCount"
                       :src="pdfFile"
-                      :page="page"
-                      :rotate="rotate"
-                      @num-pages="pageCount = $event"
+                      :page="i"
+                      style="height: 100%"
                       @page-loaded="currentPage = $event"
                       @link-clicked="page = $event"
                       @error="e => notification(e.length > 0 ? e : 'Ugyldig side', 'error')"
@@ -118,14 +109,6 @@
                   </div>
                   <v-snackbar bottom right :timeout="0" value="true" class="transparent-snack">
                     <span>
-                      <v-tooltip v-if="page !== 1" top>
-                        <v-btn slot="activator" @click='page -= 1' style="padding: 0;" flat icon><v-icon>navigate_before</v-icon></v-btn>
-                        Forrige side
-                      </v-tooltip>
-                      <v-tooltip v-if="page !== pageCount" top>
-                        <v-btn slot="activator" @click='page += 1' style="padding: 0; margin-right: 10px;" flat icon><v-icon>navigate_next</v-icon></v-btn>
-                        Neste side
-                      </v-tooltip>
                       <v-tooltip top>
                         <v-btn slot="activator" @click='zoom += 20' style="padding: 0; margin-right: 10px;" flat icon><v-icon>zoom_in</v-icon></v-btn>
                         Zoom in
@@ -198,11 +181,11 @@ export default {
     pdfFile: '',
     fileId: '',
     currentPage: 0,
-    pageCount: 0,
     page: 1,
     zoom: 100,
     rotate: 0,
-    fileLoading: false
+    fileLoading: false,
+    pageCount: 0
   }),
   methods: {
     notification (msg, type = 'info') {
@@ -212,12 +195,6 @@ export default {
     },
     unescapeString (str) {
       return unescape(str)
-    },
-    nextPage () {
-      if (this.page < this.pageCount) this.page += 1
-    },
-    prevPage () {
-      if (this.page > 1) this.page -= 1
     },
     convertDataToBinary (base64) {
       return new Uint8Array(atob(base64).split('').map(c => c.charCodeAt(0)))
@@ -233,6 +210,8 @@ export default {
         this.fileLoading = fileId
         const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`, this.accessToken)
         // const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
+        const { numPages } = await pdf.createLoadingTask(this.convertDataToBinary(file))
+        this.pageCount = numPages
         this.pdfFile = this.convertDataToBinary(file)
         this.fileLoading = false
         this.fileId = fileId
@@ -273,8 +252,15 @@ export default {
 </script>
 <style>
 .pdf-viewer-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  -moz-overflow-scrolling: touch;
+  -ms-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+.pdf-viewer-wrapper {
   margin-top: 64px;
-  overflow: hidden;
   max-height: 90vh;
   cursor: grab;
   cursor: -webkit-grab;

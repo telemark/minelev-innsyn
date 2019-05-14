@@ -138,7 +138,6 @@
 
 <script>
 import pdf from 'vue-pdf'
-import { dragscroll } from 'vue-dragscroll'
 import config from '../../config'
 
 export default {
@@ -246,8 +245,7 @@ export default {
       return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
     }
   },
-  components: { pdf },
-  directives: { dragscroll }
+  components: { pdf }
 }
 </script>
 <style>
@@ -258,20 +256,8 @@ export default {
   -moz-overflow-scrolling: touch;
   -ms-overflow-scrolling: touch;
   overflow-scrolling: touch;
-}
-.pdf-viewer-wrapper {
   margin-top: 64px;
-  max-height: 90vh;
-  cursor: grab;
-  cursor: -webkit-grab;
-  cursor: -moz-grab;
-  cursor: -o-grab;
-}
-.pdf-viewer-wrapper:active {
-  cursor : -webkit-grabbing;
-  cursor : -moz-grabbing;
-  cursor : -o-grabbing;
-  cursor : grabbing;
+  max-height: 100%;
 }
 .transparent-snack {
   opacity: 0.5;

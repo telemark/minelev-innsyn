@@ -9,7 +9,7 @@ module.exports = {
   redirectUri: process.env.VUE_APP_REDIRECT_URL || '<host addr>',
 
   // Login every time
-  extraQueryParameter: process.env.VUE_APP_EXTRA_QUERY_PARAMETER || 'prompt=login&domain_hint=skole.t-fk.no&login_hint=@skole.t-fk.no',
+  extraQueryParameter: process.env.VUE_APP_EXTRA_QUERY_PARAMETER || 'prompt=login&domain_hint=skole.t-fk.no&login_hint=username@skole.t-fk.no',
 
   // Cache Location
   cacheLocation: 'sessionStorage',

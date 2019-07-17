@@ -1,6 +1,7 @@
 {
   "name": "minelev-elevmappa",
   "version": 2,
+  "scope": "minelev",
   "builds": [
     {"src": "package.json", "use": "@now/static-build"}
   ],

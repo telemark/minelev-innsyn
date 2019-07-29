@@ -215,8 +215,12 @@ export default {
         this.page = 1
         this.zoom = 100
         this.rotate = 0
-        this.$nextTick(() => {
-          this.$refs.pdfview.scrollTop = 0
+        this.$nextTick(function () {
+          // TODO: Figure out how to do this dynamically. Stuff to check out:
+          // https://vuejs.org/v2/guide/events.html
+          // https://vuejs.org/v2/guide/components.html#Dynamic-Components
+          document.querySelector('#app > div.v-dialog__content.v-dialog__content--active > div').scrollTop = 0
+          // this.$refs.pdfviewscroll.$refs.content.scrollTop = 0
         })
       } catch (error) {
         this.fileLoading = false
@@ -250,7 +254,7 @@ export default {
 </script>
 <style>
 .pdf-viewer-wrapper {
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   -moz-overflow-scrolling: touch;

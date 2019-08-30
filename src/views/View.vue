@@ -48,12 +48,12 @@
                   </template>
                   <template slot="expand" slot-scope="props">
                     <v-card flat>
-                      <v-card-text :key="item.file" v-for="item in props.item.files">
+                      <v-card-text :key="item.file.recno" v-for="item in props.item.files">
                         <b>Fra</b>: {{ item.from || 'Ukjent' }}<br/>
                         <b>Til</b>: {{ item.to || 'Ukjent' }}<br/>
                         <v-divider style="margin-bottom: 10px"></v-divider>
-                        <span @click="showDialog(item.file)">
-                          <v-progress-circular v-if="fileLoading === item.file" size="16" width="3" indeterminate color="accent" ></v-progress-circular>
+                        <span @click="showDialog(item.file, item.recno)">
+                          <v-progress-circular v-if="fileLoading === item.recno" size="16" width="3" indeterminate color="accent" ></v-progress-circular>
                           <v-icon v-else style="height: 16px">attachment</v-icon> {{ item.title }}
                         </span>
                       </v-card-text>
@@ -201,10 +201,10 @@ export default {
         this.$adal.logout()
       }
     },
-    async showDialog (fileId) {
+    async showDialog (fileId, recno) {
       try {
-        this.fileLoading = fileId
-        const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}`, this.accessToken)
+        this.fileLoading = recno
+        const { data: { file } } = await this.$http.get(`${config.studentsApiUrl}/api/files/${fileId}/${recno}`, this.accessToken)
         // const { data: { file } } = await this.$http.get(`https://holy-glitter-6328.getsandbox.com/a`, this.accessToken)
         const { numPages } = await pdf.createLoadingTask(this.convertDataToBinary(file))
         this.pageCount = numPages

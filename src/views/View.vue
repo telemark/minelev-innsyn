@@ -49,6 +49,7 @@
                   <template slot="expand" slot-scope="props">
                     <v-card flat>
                       <v-card-text :key="item.file.recno" v-for="item in props.item.files">
+                        <b>Dato</b>: {{ item.date || 'Ukjent' }}<br/>
                         <b>Fra</b>: {{ item.from || 'Ukjent' }}<br/>
                         <b>Til</b>: {{ item.to || 'Ukjent' }}<br/>
                         <v-divider style="margin-bottom: 10px"></v-divider>

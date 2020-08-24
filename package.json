@@ -29,7 +29,7 @@
     "@vue/eslint-config-standard": "4.0.0",
     "eslint": "6.1.0",
     "eslint-plugin-vue": "5.2.3",
-    "stylus": "0.54.5",
+    "stylus": "0.54.8",
     "stylus-loader": "3.0.2",
     "vue-cli-plugin-vuetify": "0.6.1",
     "vue-template-compiler": "2.6.10",
